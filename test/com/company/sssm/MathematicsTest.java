@@ -97,7 +97,7 @@ public class MathematicsTest {
     }
 
     @Test
-    public void testPeRatio() throws Exception {
+    public void peRatio() throws Exception {
         //given
         BigDecimal[] PE_RATIO_EXPECTED = new BigDecimal[]{
                 new BigDecimal("0"),
@@ -123,7 +123,7 @@ public class MathematicsTest {
     }
 
     @Test
-    public void testGeometricMean() throws Exception {
+    public void geometricMean() throws Exception {
         //given
         BigDecimal geometricMeanExpected = new BigDecimal("1.371915");
         //when
@@ -134,7 +134,7 @@ public class MathematicsTest {
     }
 
     @Test
-    public void testVolumeWeightedStockPrice() throws Exception {
+    public void volumeWeightedStockPrice() throws Exception {
         //given
         BigDecimal [][] tradedPricesAndQuantities = {
                 new BigDecimal [] {
