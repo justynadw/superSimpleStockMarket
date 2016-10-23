@@ -1,18 +1,20 @@
 package com.company.sssm;
 
+import java.math.BigDecimal;
+
 /**
  * Created by justynadworakowska on 22.10.2016.
  */
 public class Formulas {
 
-    public double dividendYield (StockSymbol stockSymbol, double price){
-        double lastDividend = 0.0;
-        double fixedDividend = 0.0;
-        double parValue = 0.0;
+    public BigDecimal dividendYield (StockSymbol stockSymbol, BigDecimal price){
+        BigDecimal lastDividend = BigDecimal.valueOf(0.0);
+        BigDecimal fixedDividend = BigDecimal.valueOf(0.0);
+        BigDecimal parValue = BigDecimal.valueOf(0.0);
 
         return StockType.COMMON == checkStockType(stockSymbol)
-                ? Math.commonDividendYield(price, lastDividend)
-                : Math.preferredDividendYield(price, fixedDividend, parValue);
+                ? Mathematics.commonDividendYield(price, lastDividend)
+                : Mathematics.preferredDividendYield(price, fixedDividend, parValue);
     }
 
     private StockType checkStockType(StockSymbol stockSymbol) {
