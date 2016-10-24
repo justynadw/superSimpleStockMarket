@@ -1,4 +1,4 @@
-package com.company.sssm;
+package com.company.sssm.data;
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 public final class Trades {
 
-    static Stack<Trade> teaTrades = new Stack<>();
+    final static Stack<Trade> teaTrades = new Stack<>();
     static Stack<Trade> popTrades = new Stack<>();
     static Stack<Trade> aleTrades = new Stack<>();
     static Stack<Trade> ginTrades = new Stack<>();

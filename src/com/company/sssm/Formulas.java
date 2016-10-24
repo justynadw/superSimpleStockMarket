@@ -1,11 +1,13 @@
 package com.company.sssm;
 
+import com.company.sssm.data.*;
+import com.company.sssm.math.Mathematics;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
-import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -30,10 +32,10 @@ public class Formulas {
         return Mathematics.peRatio(price, dividendYield);
     }
 
-    public static void recordATrade(StockSymbol stockSymbol, Trade trade) {
-        Stack<Trade> stockTrades = chooseDataStructure(stockSymbol);
-        stockTrades.push(trade);
-
+    public static Stack<Trade> recordATrade(Stack<Trade> trades, Trade trade) {
+        //Stack<Trade> stockTrades = chooseDataStructure(trades);
+        trades.push(trade);
+        return trades;
     }
 
     public static BigDecimal geometricMean(Stack<Trade> trades) {
@@ -42,27 +44,34 @@ public class Formulas {
         return Mathematics.geometricMean(prices);
     }
 
-    public static BigDecimal geometricMean () {
+    public static BigDecimal geometricMean(Stack<Trade>... stackTrades) {
         BigDecimal geometricMean = new BigDecimal("0.0");
-        for (Trades.DataStructure trade: Trades.DataStructure.values()){
-            geometricMean = geometricMean.add(geometricMean(trade.getStockTrades()));
+        for (Stack<Trade> stactTrade : stackTrades) {
+            //Stack<Trade> trades = Trades.DataStructure.getStockTrades(stockSymbol);
+            geometricMean = geometricMean.add(geometricMean(stactTrade));
         }
+
+//        for (Trades.DataStructure trade: Trades.DataStructure.values()){
+//            geometricMean = geometricMean.add(geometricMean(trade.getStockTrades()));
+//        }
         return geometricMean;
     }
 
-    public static BigDecimal volumeWeightedStockPrice(StockSymbol stockSymbol) {
-        Stack<Trade> stockTrades = chooseDataStructure(stockSymbol);
-        return volumeWeightedStockPrice(stockTrades);
-    }
+//    public static BigDecimal volumeWeightedStockPrice(Stack<Trade> stackTrades) {
+//        //Stack<Trade> stockTrades = chooseDataStructure(stackTrades);
+//        return volumeWeightedStockPrice(stackTrades);
+//    }
 
     public static BigDecimal volumeWeightedStockPrice(Stack<Trade> stockTrades) {
         Timestamp minutes15FromNow  = new Timestamp(System.currentTimeMillis() - 15*60*1000);
         ArrayList<BigDecimal[]> tradeList = new ArrayList();
 
         Trade trade;
-        int trades = stockTrades.size();
-        while (trades != 0){
+        ArrayList<Trade> t = new ArrayList<>();
+        int tradesNum = stockTrades.size();
+        while (tradesNum != 0){
             trade = stockTrades.pop();
+            t.add(trade);
             if (trade.getTimestamp().before(minutes15FromNow)) { break;}
             BigDecimal [] tradeTab ={
                     trade.getTradePrice(),
@@ -70,7 +79,7 @@ public class Formulas {
             };
 
             tradeList.add(tradeTab);
-            trades --;
+            tradesNum --;
         }
         return Mathematics.volumeWeightedStockPrice(tradeList);
     }

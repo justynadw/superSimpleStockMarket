@@ -1,7 +1,9 @@
 package com.company.sssm;
 
+import com.company.sssm.data.StockSymbol;
+import com.company.sssm.data.Trade;
+import com.company.sssm.data.Trades;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,6 +15,8 @@ import static org.junit.Assert.*;
  * Created by justynadworakowska on 23.10.2016.
  */
 public class FormulasTest {
+
+    private static Stack<Trade> tradesTEA = new Stack<>();
     @Test
     public void dividendYield() throws Exception {
         //given
@@ -65,14 +69,14 @@ public class FormulasTest {
         Trade teaTrade_5 = new Trade(new BigInteger("35"), Trade.Indicator.SELL, new BigDecimal("0.85"));
 
         //when
-        Formulas.recordATrade(StockSymbol.TEA, teaTrade_1);
-        Formulas.recordATrade(StockSymbol.TEA, teaTrade_2);
-        Formulas.recordATrade(StockSymbol.TEA, teaTrade_3);
-        Formulas.recordATrade(StockSymbol.TEA, teaTrade_4);
-        Formulas.recordATrade(StockSymbol.TEA, teaTrade_5);
+        Formulas.recordATrade(tradesTEA, teaTrade_1);
+        Formulas.recordATrade(tradesTEA, teaTrade_2);
+        Formulas.recordATrade(tradesTEA, teaTrade_3);
+        Formulas.recordATrade(tradesTEA, teaTrade_4);
+        Formulas.recordATrade(tradesTEA, teaTrade_5);
 
         //then
-        assertEquals(5, Trades.teaTrades.size());
+        assertEquals(5, Trades.DataStructure.getStockTrades(StockSymbol.TEA).size());
     }
 
     @Test

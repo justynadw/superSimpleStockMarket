@@ -1,10 +1,10 @@
-package com.company.sssm;
+package com.company.sssm.math;
 
+import com.company.sssm.math.Mathematics;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
