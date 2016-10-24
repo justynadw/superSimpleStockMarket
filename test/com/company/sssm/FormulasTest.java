@@ -1,11 +1,11 @@
 package com.company.sssm;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +32,6 @@ public class FormulasTest {
         //then
         assertEquals(commonDividendYieldExpected, commonDividendYield);
         assertEquals(preferredDividendYieldExpected, preferredDividendYield);
-        //TODO check if the method commonDividendYield was called
     }
 
     @Test
@@ -54,7 +53,6 @@ public class FormulasTest {
         //then
         assertEquals(commonPeRatioExpected, commonPeRatio);
         assertEquals(preferredPeRatioExpected, preferredPeRatio);
-        //TODO check if the method commonDividendYield was called
     }
 
     @Test
@@ -90,11 +88,24 @@ public class FormulasTest {
     @Test
     public void volumeWeightedStockPrice() throws Exception {
         //given
+        Stack<Trade> stockTrades = new Stack<>();
+        Trade teaTrade_1 = new Trade(new BigInteger("20"), Trade.Indicator.BUY, new BigDecimal("1.20"));
+        Trade teaTrade_2 = new Trade(new BigInteger("23"), Trade.Indicator.BUY, new BigDecimal("1.05"));
+        Trade teaTrade_3 = new Trade(new BigInteger("33"), Trade.Indicator.SELL, new BigDecimal("0.90"));
+        Trade teaTrade_4 = new Trade(new BigInteger("44"), Trade.Indicator.BUY, new BigDecimal("0.97"));
+        Trade teaTrade_5 = new Trade(new BigInteger("35"), Trade.Indicator.SELL, new BigDecimal("0.85"));
+
+        stockTrades.push(teaTrade_1);
+        stockTrades.push(teaTrade_2);
+        stockTrades.push(teaTrade_3);
+        stockTrades.push(teaTrade_4);
+        stockTrades.push(teaTrade_5);
 
         //when
-        Formulas.volumeWeightedStockPrice(StockSymbol.TEA);
-        //then
+        BigDecimal volumeWeightedStockPrice = Formulas.volumeWeightedStockPrice(stockTrades);
 
+        //then
+        assertEquals(new BigDecimal("0.97"), volumeWeightedStockPrice);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.company.sssm;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -38,21 +38,28 @@ public class Formulas {
     }
 
     public static BigDecimal volumeWeightedStockPrice(StockSymbol stockSymbol) {
-        Stack<Trade> dataStructure = chooseDataStructure(stockSymbol);
+        Stack<Trade> stockTrades = chooseDataStructure(stockSymbol);
+        return volumeWeightedStockPrice(stockTrades);
+    }
 
-        BigInteger now = BigInteger.valueOf(System.currentTimeMillis());
-        System.out.println(now);
-        System.out.println(new Timestamp(now.longValue()));
-        System.out.println(new Timestamp(System.currentTimeMillis()));
-        System.out.println(new Timestamp(System.currentTimeMillis() - 15*60*1000));
-        Timestamp minutesFromNow = new Timestamp(System.currentTimeMillis() - 15*60*1000);
-        Timestamp minutesFromNowInNano = new Timestamp(minutesFromNow.getNanos());
-        Timestamp minutesFromNowBack = new Timestamp(minutesFromNowInNano.compareTo(minutesFromNow));
+    public static BigDecimal volumeWeightedStockPrice(Stack<Trade> stockTrades) {
+        Timestamp minutes15FromNow  = new Timestamp(System.currentTimeMillis() - 15*60*1000);
+        ArrayList<BigDecimal[]> tradeList = new ArrayList();
 
-        System.out.println(minutesFromNow);
-        System.out.println(minutesFromNowInNano);
-        System.out.println(minutesFromNowBack);
-        return null;
+        Trade trade;
+        int trades = stockTrades.size();
+        while (trades != 0){
+            trade = stockTrades.pop();
+            if (trade.getTimestamp().before(minutes15FromNow)) { break;}
+            BigDecimal [] tradeTab ={
+                    trade.getTradePrice(),
+                    new BigDecimal(trade.getQuantityOfShares())
+            };
+
+            tradeList.add(tradeTab);
+            trades --;
+        }
+        return Mathematics.volumeWeightedStockPrice(tradeList);
     }
 
     private static Stack<Trade> chooseDataStructure(StockSymbol stockSymbol) {

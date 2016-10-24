@@ -24,6 +24,22 @@ public class Trade {
         this.indicator = indicator;
         this.tradePrice = tradePrice;
     }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public BigInteger getQuantityOfShares() {
+        return quantityOfShares;
+    }
+
+    public Indicator getIndicator() {
+        return indicator;
+    }
+
+    public BigDecimal getTradePrice() {
+        return tradePrice;
+    }
 }
 
 

@@ -3,6 +3,7 @@ package com.company.sssm;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -136,20 +137,20 @@ public class MathematicsTest {
     @Test
     public void volumeWeightedStockPrice() throws Exception {
         //given
-        BigDecimal [][] tradedPricesAndQuantities = {
-                new BigDecimal [] {
-                        new BigDecimal("2.50"),
-                        new BigDecimal("50")
-                },
-                new BigDecimal [] {
-                        new BigDecimal("1.40"),
-                        new BigDecimal("26")
-                },
-                new BigDecimal [] {
-                        new BigDecimal("2.10"),
-                        new BigDecimal("13")
-                },
-        };
+        ArrayList<BigDecimal[]> tradedPricesAndQuantities = new ArrayList<>();
+        tradedPricesAndQuantities.add(new BigDecimal [] {
+                new BigDecimal("2.50"),
+                new BigDecimal("50")
+        });
+        tradedPricesAndQuantities.add(new BigDecimal [] {
+                new BigDecimal("1.40"),
+                new BigDecimal("26")
+        });
+        tradedPricesAndQuantities.add(new BigDecimal [] {
+                new BigDecimal("2.10"),
+                new BigDecimal("13")
+        });
+
         BigDecimal volumeWeightedStockPriceExpected = new BigDecimal("2.12");
 
         //when

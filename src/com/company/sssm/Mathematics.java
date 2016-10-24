@@ -2,6 +2,7 @@ package com.company.sssm;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -39,21 +40,18 @@ public class Mathematics {
         return new BigDecimal(Math.pow(multiplication.doubleValue(), power)).round(MathContext.DECIMAL32);
     }
 
-    public static BigDecimal volumeWeightedStockPrice (BigDecimal [] ... tradedPricesAndQuantities) {
-        Iterator<BigDecimal[]> it = Arrays.asList(tradedPricesAndQuantities).iterator();
+    public static BigDecimal volumeWeightedStockPrice (ArrayList<BigDecimal[]> tradedPricesAndQuantities) {
+        Iterator<BigDecimal[]> it = tradedPricesAndQuantities.iterator();
         BigDecimal tradedPricesAndQuantitiesSUM = BigDecimal.ZERO;
         BigDecimal quantitiesSUM = BigDecimal.ZERO;
 
         while (it.hasNext()){
             BigDecimal[] priceAndQuantity = it.next();
-            System.out.println(priceAndQuantity[0].multiply(priceAndQuantity[1]));
             tradedPricesAndQuantitiesSUM = tradedPricesAndQuantitiesSUM.add(priceAndQuantity[0].multiply(priceAndQuantity[1]));
-            System.out.println(tradedPricesAndQuantitiesSUM);
             quantitiesSUM = quantitiesSUM.add(priceAndQuantity[1], MathContext.DECIMAL32);
         }
 
-        System.out.println(tradedPricesAndQuantitiesSUM);
-        System.out.println(quantitiesSUM);
+        if (quantitiesSUM.equals(new BigDecimal("0"))) return BigDecimal.ZERO;
         return tradedPricesAndQuantitiesSUM.divide(quantitiesSUM, BigDecimal.ROUND_HALF_UP);
     }
 }
