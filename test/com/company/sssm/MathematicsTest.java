@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -126,9 +127,16 @@ public class MathematicsTest {
     @Test
     public void geometricMean() throws Exception {
         //given
+        ArrayList<BigDecimal> priceList = new ArrayList<>();
+        priceList.add(PRICES[0]);
+        priceList.add(PRICES[1]);
+        priceList.add(PRICES[2]);
+        priceList.add(PRICES[3]);
+        priceList.add(PRICES[4]);
+
         BigDecimal geometricMeanExpected = new BigDecimal("1.371915");
         //when
-        BigDecimal geometricMean = Mathematics.geometricMean(PRICES);
+        BigDecimal geometricMean = Mathematics.geometricMean(priceList);
 
         //then
         assertEquals(geometricMeanExpected, geometricMean);

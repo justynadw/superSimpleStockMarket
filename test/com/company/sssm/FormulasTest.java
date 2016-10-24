@@ -78,11 +78,24 @@ public class FormulasTest {
     @Test
     public void geometricMean() throws Exception {
         //given
+        Stack<Trade> stockTrades = new Stack<>();
+        Trade teaTrade_1 = new Trade(new BigInteger("20"), Trade.Indicator.BUY, new BigDecimal("1.20"));
+        Trade teaTrade_2 = new Trade(new BigInteger("23"), Trade.Indicator.BUY, new BigDecimal("1.05"));
+        Trade teaTrade_3 = new Trade(new BigInteger("33"), Trade.Indicator.SELL, new BigDecimal("0.90"));
+        Trade teaTrade_4 = new Trade(new BigInteger("44"), Trade.Indicator.BUY, new BigDecimal("0.97"));
+        Trade teaTrade_5 = new Trade(new BigInteger("35"), Trade.Indicator.SELL, new BigDecimal("0.85"));
+
+        stockTrades.push(teaTrade_1);
+        stockTrades.push(teaTrade_2);
+        stockTrades.push(teaTrade_3);
+        stockTrades.push(teaTrade_4);
+        stockTrades.push(teaTrade_5);
 
         //when
+        BigDecimal geometricMean = Formulas.geometricMean(stockTrades);
 
         //then
-
+        assertEquals(new BigDecimal("0.9866446"), geometricMean);
     }
 
     @Test

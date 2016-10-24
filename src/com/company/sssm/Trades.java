@@ -35,5 +35,9 @@ public final class Trades {
             this.stockSymbol = stockSymbol;
             this.stockTrades = stockTrades;
         }
+
+        public Stack<Trade> getStockTrades() {
+            return stockTrades;
+        }
     }
 }

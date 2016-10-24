@@ -3,7 +3,10 @@ package com.company.sssm;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Created by justynadworakowska on 22.10.2016.
@@ -33,8 +36,18 @@ public class Formulas {
 
     }
 
-    public BigDecimal geometricMean () {
-        return null;
+    public static BigDecimal geometricMean(Stack<Trade> trades) {
+        ArrayList<BigDecimal> prices = trades.stream().map(Trade::getTradePrice)
+                .collect(Collectors.toCollection(ArrayList::new));
+        return Mathematics.geometricMean(prices);
+    }
+
+    public static BigDecimal geometricMean () {
+        BigDecimal geometricMean = new BigDecimal("0.0");
+        for (Trades.DataStructure trade: Trades.DataStructure.values()){
+            geometricMean = geometricMean.add(geometricMean(trade.getStockTrades()));
+        }
+        return geometricMean;
     }
 
     public static BigDecimal volumeWeightedStockPrice(StockSymbol stockSymbol) {

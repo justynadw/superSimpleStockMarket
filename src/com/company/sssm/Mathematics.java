@@ -26,9 +26,9 @@ public class Mathematics {
         return price.divide(dividend, BigDecimal.ROUND_HALF_UP);
     }
 
-    public static BigDecimal geometricMean(BigDecimal ... prices) {
-        int n = prices.length;
-        Iterator<BigDecimal> it = Arrays.asList(prices).iterator();
+    public static BigDecimal geometricMean(ArrayList<BigDecimal> prices) {
+        int n = prices.size();
+        Iterator<BigDecimal> it = prices.iterator();
         BigDecimal multiplication = BigDecimal.ONE;
 
         while (it.hasNext()){
