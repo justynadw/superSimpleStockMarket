@@ -58,7 +58,7 @@ public enum StockMarket {
         this.symbol = symbol;
         this.type = type;
         this.lastDividend = lastDividend;
-        this.fixedDividend = BigDecimal.ZERO; //TODO check it
+        this.fixedDividend = BigDecimal.ZERO;
         this.parValue = parValue;
     }
 }

@@ -76,7 +76,7 @@ public class FormulasTest {
         Formulas.recordATrade(tradesTEA, teaTrade_5);
 
         //then
-        assertEquals(5, Trades.DataStructure.getStockTrades(StockSymbol.TEA).size());
+        assertEquals(5, tradesTEA.size());
     }
 
     @Test

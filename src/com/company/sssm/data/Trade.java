@@ -33,10 +33,6 @@ public class Trade {
         return quantityOfShares;
     }
 
-    public Indicator getIndicator() {
-        return indicator;
-    }
-
     public BigDecimal getTradePrice() {
         return tradePrice;
     }

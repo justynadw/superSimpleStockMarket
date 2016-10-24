@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +32,6 @@ public class Formulas {
     }
 
     public static Stack<Trade> recordATrade(Stack<Trade> trades, Trade trade) {
-        //Stack<Trade> stockTrades = chooseDataStructure(trades);
         trades.push(trade);
         return trades;
     }
@@ -47,44 +45,29 @@ public class Formulas {
     public static BigDecimal geometricMean(Stack<Trade>... stackTrades) {
         BigDecimal geometricMean = new BigDecimal("0.0");
         for (Stack<Trade> stactTrade : stackTrades) {
-            //Stack<Trade> trades = Trades.DataStructure.getStockTrades(stockSymbol);
             geometricMean = geometricMean.add(geometricMean(stactTrade));
         }
 
-//        for (Trades.DataStructure trade: Trades.DataStructure.values()){
-//            geometricMean = geometricMean.add(geometricMean(trade.getStockTrades()));
-//        }
         return geometricMean;
     }
-
-//    public static BigDecimal volumeWeightedStockPrice(Stack<Trade> stackTrades) {
-//        //Stack<Trade> stockTrades = chooseDataStructure(stackTrades);
-//        return volumeWeightedStockPrice(stackTrades);
-//    }
 
     public static BigDecimal volumeWeightedStockPrice(Stack<Trade> stockTrades) {
         Timestamp minutes15FromNow  = new Timestamp(System.currentTimeMillis() - 15*60*1000);
         ArrayList<BigDecimal[]> tradeList = new ArrayList();
 
-        Trade trade;
-        ArrayList<Trade> t = new ArrayList<>();
-        int tradesNum = stockTrades.size();
-        while (tradesNum != 0){
-            trade = stockTrades.pop();
-            t.add(trade);
-            if (trade.getTimestamp().before(minutes15FromNow)) { break;}
+        ArrayList<Trade> selectedTrades = stockTrades.stream()
+                .filter(trade -> minutes15FromNow.before(trade.getTimestamp()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        for (Trade trade: selectedTrades) {
             BigDecimal [] tradeTab ={
                     trade.getTradePrice(),
                     new BigDecimal(trade.getQuantityOfShares())
             };
-
             tradeList.add(tradeTab);
-            tradesNum --;
         }
+
         return Mathematics.volumeWeightedStockPrice(tradeList);
     }
 
-    private static Stack<Trade> chooseDataStructure(StockSymbol stockSymbol) {
-        return Trades.DataStructure.getStockTrades(stockSymbol);
-    }
 }

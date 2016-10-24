@@ -56,19 +56,17 @@ public class Main {
         System.out.println("Pop trades = " + tradesPOP.size());
         System.out.println("Gin trades = " + tradesGIN.size());
 
-        BigDecimal geometricMean = Formulas.geometricMean(tradesTEA, tradesPOP, tradesGIN);
-
-        System.out.println("geometricMean = " + geometricMean);
-
         BigDecimal vwspTea = Formulas.volumeWeightedStockPrice(tradesTEA);
         BigDecimal vwspPop = Formulas.volumeWeightedStockPrice(tradesPOP);
         BigDecimal vwspGin = Formulas.volumeWeightedStockPrice(tradesGIN);
 
-        System.out.println("Tea trades = " + tradesTEA.size());
-
         System.out.println("vwspTea = " + vwspTea);
         System.out.println("vwspPop = " + vwspPop);
         System.out.println("vwspGin = " + vwspGin);
+
+        BigDecimal geometricMean = Formulas.geometricMean(tradesTEA, tradesPOP, tradesGIN);
+
+        System.out.println("geometricMean = " + geometricMean);
 
     }
 }
